@@ -1,0 +1,66 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://admin:sanhaoadmin@localhost:40000/eureka/
+  instance:
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    ip-address: true
+feign:
+  hystrix:
+    enabled: true
+logging:
+  file: target/${spring.application.name}.log
+  level:
+    com:
+      sanhao: info
+    root: info
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+pagehelper:
+  helperDialect: mysql
+  params: count=countSql
+  reasonable: false
+  supportMethodsArguments: true
+server:
+  port: 44000
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  application:
+    name: demoServer
+  datasource:
+    druid:
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      filters: stat,wall,slf4j
+      initial-size: 5
+      max-active: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      max-wait: 60000
+      min-idle: 5
+      pool-prepared-statements: true
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      validation-query: SELECT 1 FROM DUAL
+      validation-query-timeout: 30000
+    whl:
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql://127.0.0.1:3306/order?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+
+  zipkin:
+    enabled: true
+    base-url: http://127.0.0.1:40001/
+  sleuth:
+    sampler:
+      probability: 1
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  profiles:
+    active: dev
